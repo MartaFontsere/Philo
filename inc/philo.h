@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2024/11/21 02:00:14 by mfontser         ###   ########.fr       */
+/*   Updated: 2024/11/25 03:38:29 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,36 +32,49 @@
 
 # define MAX_INT "2147483647"
 
+// # define PHILO_MAX 201
 
-typedef struct s_philo
+typedef struct s_philo // estructura philos, con la info de cada uno de ellos
 {
-	int 		id;
-	int 		to_die;
-	int 		to_eat;
-	int 		to_sleep;
-	int 		num_eats_each_philo;
-
-}				t_philo;
+	int 				id;
+	pthread_mutex_t		tenedor_propio; // no es puntero porque lo inicializa cada uno //no tengo tenedores en si, es el propio semaforo para decir si puedo hacer una accion o no. Tengo un semaforo por filo, y para hacer la accion necesito que los dos semaforos contiguos esten libres
+	pthread_mutex_t		*tenedor_externo; // es puntero porque toma la direccion de memoria del tenedor del filo anterior.
+	struct s_general	*data;
+}					t_philo;
 
 
 typedef struct s_general
 {
-	int 		philo_num;
-	t_philo 	*philos; // estructura philos, con la info de cada uno de ellos
-	int			dead_flag;
-	pthread_mutex_t 	bloqueo_muerto; 
-	pthread_mutex_t 	bloqueo_comida; 
-	pthread_mutex_t 	bloqueo_escritura; 
+	int 				philo_num;
+	t_philo 			*first_philo; //puntero a una estructura de tipo t_philo 
+	//SI LO HAGO DOBLE PUNTERO COMO GESTIONAR LA CREACION DE LA ESTRUCTURA, YA TENGO LOS DOS PUNTEROS AQUI.
+	//OSEA CUANDO DIGO QUE T_PHILO ES UN PUNTERO, ESO LO ESTOY DICIENDO YO, NO? PODRIA DECIR PERFECTAMENTE QUE ES SIMPLE, SIN PUNTERO Y NO CAMBIARIA NADA EN LA ESTRUCTURA, ESO LO DEFINO YO A PRINCIPIO EN BASE A LO QUE QUIERO.
+	int					dead_flag;
+	pthread_mutex_t 	dead_lock; 
+	pthread_mutex_t 	eat_lock; 
+	pthread_mutex_t 	write_lock; 
 
-}				t_general;
+	int 				time_to_die;
+	int 				time_to_eat;
+	int 				time_to_sleep;
+	int 				num_eats_each_philo;
+
+}						t_general;
 
 
 
 //MAIN
-int	init_data_values(t_general *data, char **argv);
+
 
 //PARSING
 int	params_are_valids(char **argv);
+int	prepare_params(t_general *data, char **argv);
+
+
+//BUILD PHILOS
+int build_philos_list (t_general *data);
+t_philo create_philos (void);
+void	put_new_list_philo_node(t_general *data, t_philo *new_philo);
 
 
 //UTILS
