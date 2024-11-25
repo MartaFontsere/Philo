@@ -6,65 +6,35 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 21:35:23 by mfontser          #+#    #+#             */
-/*   Updated: 2024/11/25 03:46:40 by mfontser         ###   ########.fr       */
+/*   Updated: 2024/11/25 21:31:49 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+int build_and_assign_forks(t_general *data)
+{
+	int i;
 
-// void	put_new_list_philo_node(t_general *data, t_philo *new_philo)
-// {
-// 	t_philo	*tmp_philo;
-
-// 	if (!data->first_philo)
-// 	{
-// 		data->first_philo = new_philo;
-// 		data->first_philo->next = NULL;
-// 	}
-// 	else
-// 	{
-// 		tmp_philo = data->first_philo;
-// 		while (tmp_philo && tmp_philo->next)
-// 			tmp_philo = tmp_philo->next;
-// 		tmp_philo->next = new_philo;
-// 		philo->next = NULL;
-// 	}
-// }
-
-// t_philo create_philos (void)
-// {
-// 	t_philo *new_philo;
-
-// 	new_philo = malloc(sizeof(t_philo) * 1);
-// 	if (!new_philo)
-// 		return (NULL);
-// 	return (new_philo);
-// }
-
-// int build_philos_array (t_general *data)
-// {
-// 	t_philo *new_philo;
-// 	int i;
-
-// 	i = 1;
-// 	while (i <= data->philo_num)
-// 	{
-// 		new_philo = create_philos ()
-// 		if (!new_philo)
-// 		{
-// 			//free lista de philos hasta ahora;
-// 			return (0);
-// 		} 
-// 		//rellenar
-// 		new_philo->id = i;
-// 		new_philo->data = data;
-// 		put_new_list_philo_node (data, new_philo);
-// 		i++;
-// 	}
-// 	return (1);
-// }
-
+	data->forks_locks = malloc(sizeof(pthread_mutex_t) * (data->philo_num + 1));
+	if (!data->forks_locks)
+	{
+		//liberar array de filosy demas cosaas que tuviere, puedo hacerlo aqui o fuera de la funcion
+		return (0); //pues saldria limpio
+	}
+	i = 0;
+	while (i < data->philo_num)
+	{
+		data->philos[i]->right_fork = &data->forks_locks[i];
+		if (i > 0)
+			data->philos[i]->left_fork = data->philos[i - 1]->right_fork;
+		data->philos[i]->data = data;
+		i++;
+	}
+	data->philos[0]->left_fork =  data->philos[i - 1]->right_fork;
+	data->philos[i] = NULL;
+	return (1);
+}
 
 int build_philos_array (t_general *data)
 {
@@ -75,21 +45,15 @@ int build_philos_array (t_general *data)
 	philos = malloc(sizeof(t_philo) * (data->philo_num + 1));
 	if (!philos)
 		return (0);
+	data->first_philo = philo;
 	i = 0;
 	while (i < data->philo_num)
 	{
-		philos->id = i + 1;
-		if (pthread_mutex_init(&philos->tenedor_propio, NULL) != 0)
-		{
-			free(philos);
-			return (0);
-		}
-		if (i > 0)
-			philos->tenedor_externo = &data->first_philo[i - 1]->tenedor_propio;
-		philos->data = data;
+		philos[i]->id = i + 1;
+		philos[i]->data = data;
+		philos[i]->dead_status = 0;
 		i++;
 	}
-	data->first_philo[0]->tenedor_externo =  &data->first_philo[i - 1]->tenedor_propio;;
 	philo[i] = NULL;
 	return (1);
 }

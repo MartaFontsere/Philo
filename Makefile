@@ -6,7 +6,7 @@
 #    By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 12:21:16 by mfontser          #+#    #+#              #
-#    Updated: 2024/11/23 23:27:21 by mfontser         ###   ########.fr        #
+#    Updated: 2024/11/25 21:17:07 by mfontser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ ORANGE =\e[1;38;2;255;128;0m
 
 #------------------------------------------------VARIABLES---------------------------------------------------#
 
-FILES =  philo.c parsing.c initialitations.c build_philos_list.c error_messages.c utils/utils.c  utils/atoi.c
+FILES =  philosofers.c parsing.c initialitations.c build_philos_list.c error_messages.c utils/utils.c  utils/atoi.c
 
 
 SRCDIR = src/
@@ -38,7 +38,9 @@ NAME = philo
 HEADER = inc/philo.h
 CC = cc 
 RM = rm -rf 
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=thread 
+
+#-fsanitize=address
 
 
 #--------------------------------------------------NORMAS----------------------------------------------------#
