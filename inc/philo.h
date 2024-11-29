@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2024/11/25 22:16:08 by mfontser         ###   ########.fr       */
+/*   Updated: 2024/11/28 23:34:34 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,24 +38,27 @@ typedef struct s_philo // estructura philos, con la info de cada uno de ellos
 {
 	int 				id;
 	pthread_t 			thread_id;
-	pthread_mutex_t		*right_fork; // no es puntero porque lo inicializa cada uno //no tengo tenedores en si, es el propio semaforo para decir si puedo hacer una accion o no. Tengo un semaforo por filo, y para hacer la accion necesito que los dos semaforos contiguos esten libres
+	pthread_mutex_t		*right_fork; // es puntero porque se supone que todos los tenedores estan en la mesa y yo tengo una lista de tenedores y al primero le asigno el primer tenedor y el del filo anterior. Todo son punteros. no era puntero porque lo inicializa cada uno //no tengo tenedores en si, es el propio semaforo para decir si puedo hacer una accion o no. Tengo un semaforo por filo, y para hacer la accion necesito que los dos semaforos contiguos esten libres
 	pthread_mutex_t		*left_fork; // es puntero porque toma la direccion de memoria del tenedor del filo anterior.
-	int  				dead_status;
+	//int  				dead_status;
+	int  				num_eats;
+	unsigned int		last_eat;
 	struct s_general	*data;
-}					t_philo;
+}						t_philo;
 
 
 typedef struct s_general
 {
 	int 				philo_num;
-	t_philo 			*philos; //puntero a una estructura de tipo t_philo 
-	//SI LO HAGO DOBLE PUNTERO COMO GESTIONAR LA CREACION DE LA ESTRUCTURA, YA TENGO LOS DOS PUNTEROS AQUI.
-	//OSEA CUANDO DIGO QUE T_PHILO ES UN PUNTERO, ESO LO ESTOY DICIENDO YO, NO? PODRIA DECIR PERFECTAMENTE QUE ES SIMPLE, SIN PUNTERO Y NO CAMBIARIA NADA EN LA ESTRUCTURA, ESO LO DEFINO YO A PRINCIPIO EN BASE A LO QUE QUIERO.
+	t_philo 			*philos; //puntero a una estructura de tipo t_philo. podria hacerlo doble puntero, pero eso requeriria hacer malloc de cada una de las posiciones que ocupen los filos. Asi solo hago uno de tamano tphilo para cada philo y ya.  
+
+	// T_PHILO ES UNA ESTRUCTURA QUE TIENE UN TAMANO SEGUN LA INFO UE ALMACENA. DESPUES LA VARIABLE QUE HAGA DE ESE TIPO PODRA SER PUNTERO O DOBLE PUNTERO, ESO LO ESTOY DICIENDO YO. PODRIA DECIR PERFECTAMENTE QUE ES SIMPLE, SIN PUNTERO Y NO CAMBIARIA NADA EN LA ESTRUCTURA, ESO LO DEFINO YO A PRINCIPIO EN BASE A LO QUE QUIERO.
 	int					dead_flag;
-	pthread_mutex_t		*forks_locks;
-	pthread_mutex_t 	dead_lock; 
-	// pthread_mutex_t 	eat_lock; 
+	pthread_mutex_t		*forks_array;
+	pthread_mutex_t 	start_lock; 
 	pthread_mutex_t 	write_lock; 
+	pthread_mutex_t 	dead_lock; 
+	unsigned int		t_start;
 	int 				time_to_die;
 	int 				time_to_eat;
 	int 				time_to_sleep;
@@ -69,17 +72,24 @@ typedef struct s_general
 
 
 //PARSING
-int	params_are_valids(char **argv);
-int	prepare_params(t_general *data, char **argv);
+int	params_are_valids(t_general *data, char **argv);
+int	check_valid_format(char **argv);
+int	check_size_int(char **argv);
+int	params_conversion_to_int(t_general *data, char **argv);
+int check_extreme_cases (t_general *data);
 
-
+//INITIALITATIONS
 int init_data_struct (t_general *data);
+int init_philos_struct(t_general *data);
 
-//BUILD PHILOS
+
+//BUILD PHILOS AND FORKS
+int build_philos_and_forks(t_general *data);
 int build_philos_array (t_general *data);
-t_philo create_philos (void);
-void	put_new_list_philo_node(t_general *data, t_philo *new_philo);
+int build_forks_array(t_general *data);
 
+//TIME
+unsigned int	get_current_time(void);
 
 //UTILS
 size_t	ft_strlen(const char *str);
@@ -87,6 +97,11 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n);
 int	ft_isspace(int c);
 int	ft_atoi(const char *str);
 
+
+//FREE
+void free_all_info(t_general *data);
+void free_arrays(t_general *data);
+void free_data_mutex (t_general *data);
 
 
 // ERROR_MESSAGES
