@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 22:08:12 by mfontser          #+#    #+#             */
-/*   Updated: 2024/11/28 23:34:01 by mfontser         ###   ########.fr       */
+/*   Updated: 2024/11/29 23:37:34 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ unsigned int	get_current_time(void)
 	return (current_time);
 }
 
-// unsigned int	get_sim_time(t_simulation *sim)
-// {
-// 	return (get_current_time() - sim->t_start);
-// }
+unsigned int	get_simulation_time(t_general *data)
+{
+	return (get_current_time() - data->t_start);
+}
 
 // int	comprove_death(t_simulation *sim)
 // {

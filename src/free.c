@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 01:36:46 by mfontser          #+#    #+#             */
-/*   Updated: 2024/11/28 02:26:15 by mfontser         ###   ########.fr       */
+/*   Updated: 2024/11/29 23:40:08 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,4 @@ void free_all_info(t_general *data)
 	}
 	free_arrays (data);
 }
-
-
 

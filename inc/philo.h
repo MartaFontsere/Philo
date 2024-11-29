@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2024/11/28 23:34:34 by mfontser         ###   ########.fr       */
+/*   Updated: 2024/11/29 22:01:11 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,12 @@ typedef struct s_philo // estructura philos, con la info de cada uno de ellos
 	pthread_t 			thread_id;
 	pthread_mutex_t		*right_fork; // es puntero porque se supone que todos los tenedores estan en la mesa y yo tengo una lista de tenedores y al primero le asigno el primer tenedor y el del filo anterior. Todo son punteros. no era puntero porque lo inicializa cada uno //no tengo tenedores en si, es el propio semaforo para decir si puedo hacer una accion o no. Tengo un semaforo por filo, y para hacer la accion necesito que los dos semaforos contiguos esten libres
 	pthread_mutex_t		*left_fork; // es puntero porque toma la direccion de memoria del tenedor del filo anterior.
-	//int  				dead_status;
-	int  				num_eats;
-	unsigned int		last_eat;
+	pthread_mutex_t		*d_status;
+	int  				dead_status;
+	pthread_mutex_t		*n_meals;
+	int  				num_meals;
+	pthread_mutex_t		*l_meal;
+	unsigned int		last_meal;
 	struct s_general	*data;
 }						t_philo;
 
@@ -53,8 +56,11 @@ typedef struct s_general
 	t_philo 			*philos; //puntero a una estructura de tipo t_philo. podria hacerlo doble puntero, pero eso requeriria hacer malloc de cada una de las posiciones que ocupen los filos. Asi solo hago uno de tamano tphilo para cada philo y ya.  
 
 	// T_PHILO ES UNA ESTRUCTURA QUE TIENE UN TAMANO SEGUN LA INFO UE ALMACENA. DESPUES LA VARIABLE QUE HAGA DE ESE TIPO PODRA SER PUNTERO O DOBLE PUNTERO, ESO LO ESTOY DICIENDO YO. PODRIA DECIR PERFECTAMENTE QUE ES SIMPLE, SIN PUNTERO Y NO CAMBIARIA NADA EN LA ESTRUCTURA, ESO LO DEFINO YO A PRINCIPIO EN BASE A LO QUE QUIERO.
-	int					dead_flag;
+	int					stop_simulation;
 	pthread_mutex_t		*forks_array;
+	pthread_mutex_t		*dead_status_array;
+	pthread_mutex_t		*num_meals_array;
+	pthread_mutex_t		*last_meal_array;
 	pthread_mutex_t 	start_lock; 
 	pthread_mutex_t 	write_lock; 
 	pthread_mutex_t 	dead_lock; 
