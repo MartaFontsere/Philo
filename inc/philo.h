@@ -23,20 +23,40 @@
 /*COLORS*/
 # define END "\x1b[0m"
 # define RED "\e[1;91m"
+# define GREEN "\e[1;92m"
 # define YELLOW "\e[1;93m"
 # define BLUE "\e[1;94m"
-# define GREEN "\e[1;92m"
+# define TURQUOISE "\e[1;38;5;80m"
+# define PINK "\e[1;38;5;213m"
+# define FUCSIA "\e[1;38;5;201m"
+# define PURPLE "\e[1;38;5;135m"
 # define CYAN "\e[1;96m"
-# define PURPLE "\e[1;95m"
+# define LIME_GREEN "\e[1;38;5;118m"
 # define ORANGE "\e[1;38;2;255;128;0m"
 
 # define MAX_INT "2147483647"
 
-//# define PHILO_MAX 201
+// SIMULATION STATE
+# define RUNNING 1
+# define STOPPED 0
+
+// PRINT STATES 
+# define TAKEN_FORK_STATE "has taken a fork 🤗🍽️\n"
+# define EATING_STATE "is eating 🤤🍝\n"
+# define SLEEPING_STATE "is sleeping 😴💤\n"
+# define THINKING_STATE "is thinking 🤔💭\n"
+# define DIED "died 😵💀\n"
+
+// PHILOS ACTIONS
+# define NUM_OF_ACTIONS 3
+# define THINK 0
+# define EAT 1
+# define SLEEP 2
 
 typedef struct s_philo // estructura philos, con la info de cada uno de ellos
 {
 	int 				id;
+	char 				*color;
 	pthread_t 			thread_id;
 	pthread_mutex_t		*right_fork; // es puntero porque se supone que todos los tenedores estan en la mesa y yo tengo una lista de tenedores y al primero le asigno el primer tenedor y el del filo anterior. Todo son punteros. no era puntero porque lo inicializa cada uno //no tengo tenedores en si, es el propio semaforo para decir si puedo hacer una accion o no. Tengo un semaforo por filo, y para hacer la accion necesito que los dos semaforos contiguos esten libres
 	pthread_mutex_t		*left_fork; // es puntero porque toma la direccion de memoria del tenedor del filo anterior.
@@ -63,9 +83,9 @@ typedef struct s_general
 	pthread_mutex_t		*last_meal_array;
 	pthread_mutex_t 	start_lock; 
 	pthread_mutex_t 	write_lock; 
-	pthread_mutex_t 	dead_lock; 
+	pthread_mutex_t 	life_checker_lock; 
 	unsigned int		t_start;
-	int 				time_to_die;
+	unsigned int 		time_to_die;
 	int 				time_to_eat;
 	int 				time_to_sleep;
 	int 				num_eats_each_philo;
@@ -93,9 +113,30 @@ int init_philos_struct(t_general *data);
 int build_philos_and_forks(t_general *data);
 int build_philos_array (t_general *data);
 int build_forks_array(t_general *data);
+int	sleep_nap (t_philo *philo);
+int	think(t_philo *philo);
+
 
 //TIME
 unsigned int	get_current_time(void);
+unsigned int	get_simulation_time(t_general *data);
+
+
+//ACTIONS
+
+int	eat(t_philo *philo);
+int	take_forks(t_philo *philo);
+void	unlock_forks(t_philo *philo);
+
+//CONTROLLER
+int check_simulation_state (t_philo *philo);
+void	supervise_simulation(t_general *data);
+void	kill_philo(t_general *data, t_philo *philo);
+int	all_meals_eaten(t_general *data, int num_of_philos_eaten_enough);
+
+
+//SIMULATION UTILS
+int	print_state(t_philo *philo, char *state);
 
 //UTILS
 size_t	ft_strlen(const char *str);

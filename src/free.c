@@ -15,7 +15,7 @@
 void free_data_mutex (t_general *data)
 {
 	pthread_mutex_destroy(&data->write_lock);
-	pthread_mutex_destroy(&data->dead_lock);
+	pthread_mutex_destroy(&data->life_checker_lock);
 }
 
 void free_arrays(t_general *data)

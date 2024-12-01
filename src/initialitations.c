@@ -128,7 +128,7 @@
 			write(2, "ABORT: Error while creatin a Mutex\n", 35);
 			return (0);
 		}
-		if (pthread_mutex_init(&data->dead_lock, NULL)!= 0)
+		if (pthread_mutex_init(&data->life_checker_lock, NULL)!= 0)
 		{
 			pthread_mutex_destroy(&data->start_lock);
 			pthread_mutex_destroy(&data->write_lock);
@@ -136,11 +136,11 @@
 			return (0);
 		}
 		data->t_start = 0;
-		if (init_last_meal_array (data))
+		if (init_last_meal_array (data) == 0)
 			return (0);
-		if (init_num_meals_array (data))
+		if (init_num_meals_array (data) == 0)
 			return (0);
-		if (init_dead_status_array (data))
+		if (init_dead_status_array (data) == 0)
 			return (0);
 		return (1);
 	}
@@ -156,10 +156,45 @@
 			data->philos[i].right_fork = &data->forks_array[i]; //philos[i] no es un puntero, es un philo en concreto, por eso luego le sigue un punto
 			if (i > 0)
 				data->philos[i].left_fork = data->philos[i - 1].right_fork;
-			data->philos[i].dead_status = 0;
+			data->philos[i].id = i + 1;
 			data->philos[i].data = data;
+			data->philos[i].d_status = &data->dead_status_array[i];
+			data->philos[i].dead_status = 0;
+			data->philos[i].n_meals = &data->num_meals_array[i];
+			data->philos[i].num_meals = 0;
+			data->philos[i].l_meal = &data->last_meal_array[i];
+			data->philos[i].last_meal = 0;
+			define_color (data->philos[i]);
+			
 			i++;
 		}
-		data->philos[0].left_fork =  data->philos[i - 1].right_fork;
+		if (data->philo_num > 1)
+			data->philos[0].left_fork =  data->philos[i - 1].right_fork;
+		else
+			data->philos[0].left_fork =  data->philos[0].right_fork; //CREO
 		return (1);
 	}
+
+void define_color (t_philo *philo)
+{
+	if (data->philos[i].id % 10 == 0)
+	    data->philos[i].color = BLUE; 
+	else if (data->philos[i].id % 10 == 1)
+	    data->philos[i].color = GREEN; 
+	else if (data->philos[i].id % 10 == 2)
+	    data->philos[i].color = FUCSIA; 
+	else if (data->philos[i].id % 10 == 3)
+	    data->philos[i].color = ORANGE; 
+	else if (data->philos[i].id % 10 == 4)
+	    data->philos[i].color = CYAN;
+	else if (data->philos[i].id % 10 == 5)
+	    data->philos[i].color = PINK; 
+	else if (data->philos[i].id % 10 == 6)
+	    data->philos[i].color = YELLOW;
+	else if (data->philos[i].id % 10 == 7)
+	    data->philos[i].color = LIME_GREEN;
+	else if (data->philos[i].id % 10 == 8)
+	    data->philos[i].color = PURPLE; 
+	else if (data->philos[i].id % 10 == 9)
+	    data->philos[i].color = TURQUOISE;
+}

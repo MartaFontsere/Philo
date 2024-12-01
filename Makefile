@@ -22,7 +22,7 @@ ORANGE =\e[1;38;2;255;128;0m
 
 #------------------------------------------------VARIABLES---------------------------------------------------#
 
-FILES =  philo.c parsing.c initialitations.c build_philos_and_forks.c time.c error_messages.c free.c utils/utils.c  utils/atoi.c
+FILES =  philo.c parsing.c initialitations.c build_philos_and_forks.c time.c controller.c actions.c simulation_utils.c error_messages.c free.c utils/utils.c  utils/atoi.c
 
 
 SRCDIR = src/
@@ -38,7 +38,7 @@ NAME = philo
 HEADER = inc/philo.h
 CC = cc 
 RM = rm -rf 
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=thread 
+CFLAGS = -Wall -Wextra -Werror #-g -fsanitize=thread 
 
 #-fsanitize=address
 

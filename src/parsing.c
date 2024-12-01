@@ -18,12 +18,16 @@ int check_extreme_cases (t_general *data)
 {
 	if (data->philo_num == 0 || data->time_to_die == 0 || data->time_to_eat == 0 || data->time_to_sleep == 0)
 	{
+		write(2, RED, ft_strlen(RED));
 		write (2, "Error: no parameter can be 0\n", 29);
+		write(2, END, ft_strlen(END));
 		return (0);
 	}
 	if (data->philo_num > 200)
 	{
+		write(2, RED, ft_strlen(RED));
 		write (2, "Error: Too many philosophers, not enough spaghetti for everyone\n", 64);
+		write(2, END, ft_strlen(END));
 		return (0);
 	}
 	return (1);
@@ -33,19 +37,12 @@ int check_extreme_cases (t_general *data)
 
 int	params_conversion_to_int(t_general *data, char **argv)
 {
-	printf ("Data values:\n");
 	data->philo_num = ft_atoi(argv[1]);
 	data->time_to_die = ft_atoi(argv[2]);
 	data->time_to_eat = ft_atoi(argv[3]);
 	data->time_to_sleep = ft_atoi(argv[4]);
 	if (argv[5])
 		data->num_eats_each_philo = ft_atoi(argv[5]);
-	printf ("%d\n", data->philo_num);
-	printf ("%d\n", data->time_to_die);
-	printf ("%d\n", data->time_to_eat);
-	printf ("%d\n", data->time_to_sleep);
-	if (argv[5])
-		printf ("%d\n", data->num_eats_each_philo);
 	
 	return (1);
 }
@@ -128,9 +125,8 @@ int	params_are_valids(t_general *data, char **argv)
 		return (0);
 	if (check_size_int(argv) == 0)
 		return (0);
-	if (params_conversion_to_int(data, argv) == 0)
-		return (1);
+	params_conversion_to_int(data, argv);
 	if (check_extreme_cases (data) == 0)
-		return (1);
+		return (0);
 	return (1);
 }

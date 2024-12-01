@@ -56,7 +56,7 @@ void wrong_number_of_parameters()
 {
 	write(2, RED, ft_strlen(RED));
 	write(2, "To run the program you need the following parameters:\n", 54);
-	write(2, "  * ./philosophers.c\n", 27);
+	write(2, "  * ./philo\n", 12);
 	write(2, "  * number_of_philosophers\n", 27);
 	write(2, "  * time_to_die\n", 16);
 	write(2, "  * time_to_eat\n", 16);
