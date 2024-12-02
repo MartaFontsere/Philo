@@ -122,6 +122,12 @@ unsigned int	get_current_time(void);
 unsigned int	get_simulation_time(t_general *data);
 
 
+//SIMULATION
+int run_simulation (t_general *data);
+int create_philos_threads(t_general *data);
+void *philo_routine(void *the_philo);
+
+
 //ACTIONS
 
 int	eat(t_philo *philo);

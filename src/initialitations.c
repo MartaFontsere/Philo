@@ -146,6 +146,30 @@
 	}
 	//cada fiosofo tiene un tenedor, y tendra que coger el suyo y el del siguiente. por lo tanto tengo que inicializar mi tenedor y cuando este 
 
+void define_color (t_philo *philo)
+{
+	if (philo->id % 10 == 0)
+	    philo->color = BLUE; 
+	else if (philo->id % 10 == 1)
+	    philo->color = GREEN; 
+	else if (philo->id % 10 == 2)
+	    philo->color = FUCSIA; 
+	else if (philo->id % 10 == 3)
+	    philo->color = ORANGE; 
+	else if (philo->id % 10 == 4)
+	    philo->color = CYAN;
+	else if (philo->id % 10 == 5)
+	    philo->color = PINK; 
+	else if (philo->id % 10 == 6)
+	    philo->color = YELLOW;
+	else if (philo->id % 10 == 7)
+	    philo->color = LIME_GREEN;
+	else if (philo->id % 10 == 8)
+	    philo->color = PURPLE; 
+	else if (philo->id % 10 == 9)
+	    philo->color = TURQUOISE;
+}
+
 	int init_philos_struct(t_general *data)
 	{
 		int i;
@@ -164,8 +188,7 @@
 			data->philos[i].num_meals = 0;
 			data->philos[i].l_meal = &data->last_meal_array[i];
 			data->philos[i].last_meal = 0;
-			define_color (data->philos[i]);
-			
+			define_color (&data->philos[i]);
 			i++;
 		}
 		if (data->philo_num > 1)
@@ -175,26 +198,3 @@
 		return (1);
 	}
 
-void define_color (t_philo *philo)
-{
-	if (data->philos[i].id % 10 == 0)
-	    data->philos[i].color = BLUE; 
-	else if (data->philos[i].id % 10 == 1)
-	    data->philos[i].color = GREEN; 
-	else if (data->philos[i].id % 10 == 2)
-	    data->philos[i].color = FUCSIA; 
-	else if (data->philos[i].id % 10 == 3)
-	    data->philos[i].color = ORANGE; 
-	else if (data->philos[i].id % 10 == 4)
-	    data->philos[i].color = CYAN;
-	else if (data->philos[i].id % 10 == 5)
-	    data->philos[i].color = PINK; 
-	else if (data->philos[i].id % 10 == 6)
-	    data->philos[i].color = YELLOW;
-	else if (data->philos[i].id % 10 == 7)
-	    data->philos[i].color = LIME_GREEN;
-	else if (data->philos[i].id % 10 == 8)
-	    data->philos[i].color = PURPLE; 
-	else if (data->philos[i].id % 10 == 9)
-	    data->philos[i].color = TURQUOISE;
-}
