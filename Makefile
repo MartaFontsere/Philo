@@ -6,7 +6,7 @@
 #    By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 12:21:16 by mfontser          #+#    #+#              #
-#    Updated: 2024/12/03 11:56:14 by mfontser         ###   ########.fr        #
+#    Updated: 2024/12/03 13:03:54 by mfontser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ FILES += simulation/run_simulation.c simulation/controller.c simulation/get_time
 
 FILES += error/error_messages.c
 
-FILES += free/free.c
+FILES += free/free_1.c free/free_2.c
 
 FILES += libft_utils/ft_atoi.c libft_utils/ft_isspace.c libft_utils/ft_strlen.c libft_utils/ft_strncmp.c
 
@@ -52,7 +52,7 @@ NAME = philo
 HEADER = inc/philo.h
 CC = cc 
 RM = rm -rf 
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=thread 
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 
 #--------------------------------------------------NORMAS----------------------------------------------------#
 

@@ -12,7 +12,6 @@
 
 #include "philo.h"
 
-
 int	check_signs(char **argv, int i, int *j)
 {
 	if (argv[i][*j] == '-')
@@ -29,7 +28,6 @@ int	check_signs(char **argv, int i, int *j)
 		}
 		(*j)++;
 	}
-
 	return (1);
 }
 

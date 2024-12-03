@@ -6,15 +6,13 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 01:19:59 by mfontser          #+#    #+#             */
-/*   Updated: 2024/12/02 22:07:22 by mfontser         ###   ########.fr       */
+/*   Updated: 2024/12/03 12:12:05 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-//init data struct
-
-int initialitations (t_general *data)
+int	initialitations(t_general *data)
 {
 	if (init_data_struct(data) == 0)
 		return (0);
