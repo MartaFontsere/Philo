@@ -1,31 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.c                                            :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/15 00:07:55 by mfontser          #+#    #+#             */
-/*   Updated: 2024/12/03 01:02:21 by mfontser         ###   ########.fr       */
+/*   Created: 2024/12/02 16:57:16 by mfontser          #+#    #+#             */
+/*   Updated: 2024/12/02 16:57:25 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	main(int argc, char **argv)
+int	ft_isspace(int c)
 {
-	t_general	data;
-
-	if (argc > 6 || argc < 5)
+	if (c == '\t' || c == '\n' || c == '\v' || c == '\f'
+		|| c == '\r' || c == ' ')
 	{
-		wrong_number_of_parameters();
 		return (1);
 	}
-	if (params_are_valids(&data, argv) == 0)
-		return (1);
-	if (initialitations(&data) == 0)
-		return (1);
-	run_simulation(&data);
-	finish_simulation(&data);
 	return (0);
 }

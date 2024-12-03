@@ -6,7 +6,7 @@
 #    By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 12:21:16 by mfontser          #+#    #+#              #
-#    Updated: 2024/11/28 23:34:17 by mfontser         ###   ########.fr        #
+#    Updated: 2024/12/03 01:28:10 by mfontser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,8 +23,15 @@ PINK = \e[1;38;5;213m
 
 #------------------------------------------------VARIABLES---------------------------------------------------#
 
-FILES =  philo.c parsing.c initialitations.c build_philos_and_forks.c simulation.c time.c controller.c actions.c simulation_utils.c error_messages.c free.c utils/utils.c  utils/atoi.c
+FILES =  philo.c parsing.c error_messages.c
 
+FILES += initialitations/initialitations.c initialitations/init_data_struct.c initialitations/build_philos_and_forks.c initialitations/init_philos_struct.c
+
+FILES += simulation/run_simulation.c simulation/controller.c simulation/get_time.c simulation/actions.c simulation/print_state.c simulation/finish_simulation.c
+
+FILES += free/free.c
+
+FILES += libft_utils/ft_atoi.c libft_utils/ft_isspace.c libft_utils/ft_strlen.c libft_utils/ft_strncmp.c
 
 SRCDIR = src/
 SRCS = 	$(addprefix $(SRCDIR), $(FILES))
@@ -39,7 +46,7 @@ NAME = philo
 HEADER = inc/philo.h
 CC = cc 
 RM = rm -rf 
-CFLAGS = -Wall -Wextra -Werror #-g -fsanitize=thread 
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=thread 
 
 #-fsanitize=address
 
@@ -80,7 +87,7 @@ ${NAME}: ${OBJS}
 	@echo "	$(NC) ||$(END)  $(YELLOW)⠙⠳⢦⣀   ⡿⠀$(END)⠀$(PINK)⠀⠀⠀⠀⠀⠀⠀⢰⡿⠁⠀$(END)$(YELLOW)⠀⠀⠀⠀⠀⠀⠀⢿⠀⠀⣀⡴⠞⠋⠀$(END)$(NC)⠀⠀||⠀$(END)⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
 	@echo "	$(NC) ||$(END)	$(YELLOW) ⠁⠛⠾⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀  ⠘⠷⠛⠁⠀⠀$(END)⠀⠀⠀ $(NC)||⠀⠀⠀$(END)⠀⠀⠀     "
 	@echo "	$(NC) \`´	$(END)		                   $(NC)\`´  $(END)         " 
-	@echo "	$(ORANGE)		✨ PHILO DONE ✨⠀⠀⠀⠀     $(END)                "
+	@echo "	$(CYAN)         ✨ PHILOSOPHERS ARE READY ✨⠀⠀⠀⠀     $(END)                "
 	@echo "	"
 
 clean:

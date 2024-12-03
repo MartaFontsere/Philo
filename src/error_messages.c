@@ -6,30 +6,21 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 00:27:47 by mfontser          #+#    #+#             */
-/*   Updated: 2024/11/25 18:37:24 by mfontser         ###   ########.fr       */
+/*   Updated: 2024/12/03 02:33:26 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-
-void error_space_after_sign()
+void	error_non_numbers_found(void)
 {
 	write(2, RED, ft_strlen(RED));
-	write(2, "Error: The formatting is invalid, ", 34);
-	write(2, "there is a space after a signChars have been found\n", 51);
+	write(2, "Error: ", 7);
+	write(2, "Only numbers accepted\n", 22);
 	write(2, END, ft_strlen(END));
 }
 
-void error_chars_found()
-{
-	write(2, RED, ft_strlen(RED));
-	write(2, "Error: Chars have been found, ", 30);
-	write(2, "only numbers accepted\n", 22);
-	write(2, END, ft_strlen(END));
-}
-
-void error_positive_sign()
+void	error_positive_sign(void)
 {
 	write(2, RED, ft_strlen(RED));
 	write(2, "Error: There is only one plus sign, ", 36);
@@ -37,7 +28,7 @@ void error_positive_sign()
 	write(2, END, ft_strlen(END));
 }
 
-void error_negative_sign()
+void	error_negative_sign(void)
 {
 	write(2, RED, ft_strlen(RED));
 	write(2, "Error: There is a negative sign, ", 33);
@@ -45,14 +36,14 @@ void error_negative_sign()
 	write(2, END, ft_strlen(END));
 }
 
-void error_empty_string()
+void	error_empty_string(void)
 {
 	write(2, RED, ft_strlen(RED));
 	write(2, "Error: There is an empty string\n", 32);
 	write(2, END, ft_strlen(END));
 }
 
-void wrong_number_of_parameters()
+void	wrong_number_of_parameters(void)
 {
 	write(2, RED, ft_strlen(RED));
 	write(2, "To run the program you need the following parameters:\n", 54);

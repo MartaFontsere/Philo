@@ -1,42 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/28 01:36:46 by mfontser          #+#    #+#             */
-/*   Updated: 2024/11/29 23:40:08 by mfontser         ###   ########.fr       */
+/*   Created: 2024/11/16 20:07:25 by mfontser          #+#    #+#             */
+/*   Updated: 2024/12/02 16:59:24 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void free_data_mutex (t_general *data)
-{
-	pthread_mutex_destroy(&data->write_lock);
-	pthread_mutex_destroy(&data->life_checker_lock);
-}
 
-void free_arrays(t_general *data)
-{
-	free_data_mutex (data);
-	free (data->philos);
-	data->philos = NULL;
-	free (data->forks_array);
-	data->forks_array = NULL;
-}
 
-void free_all_info(t_general *data)
+int	ft_atoi(const char *str)
 {
 	int	i;
+	int	signo;
+	int	result;
 
 	i = 0;
-	while (i < data->philo_num)
+	result = 0;
+	signo = 1;
+	while (ft_isspace(str[i]) == 1)
+		i++;
+	if (str[i] == '+')
 	{
-		pthread_mutex_destroy(&data->forks_array[i]);
 		i++;
 	}
-	free_arrays (data);
+	else if (str[i] == '-')
+	{
+		i++;
+		signo = -1;
+	}
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		result = (result * 10) + (str[i] - 48);
+		i++;
+	}
+	return (result * signo);
 }
-

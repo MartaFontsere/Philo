@@ -1,31 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.c                                            :+:      :+:    :+:   */
+/*   initialitations.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/15 00:07:55 by mfontser          #+#    #+#             */
-/*   Updated: 2024/12/03 01:02:21 by mfontser         ###   ########.fr       */
+/*   Created: 2024/11/15 01:19:59 by mfontser          #+#    #+#             */
+/*   Updated: 2024/12/02 22:07:22 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	main(int argc, char **argv)
-{
-	t_general	data;
+//init data struct
 
-	if (argc > 6 || argc < 5)
-	{
-		wrong_number_of_parameters();
-		return (1);
-	}
-	if (params_are_valids(&data, argv) == 0)
-		return (1);
-	if (initialitations(&data) == 0)
-		return (1);
-	run_simulation(&data);
-	finish_simulation(&data);
-	return (0);
+int initialitations (t_general *data)
+{
+	if (init_data_struct(data) == 0)
+		return (0);
+	if (build_philos_and_forks(data) == 0)
+		return (0);
+	init_philos_struct(data);
+	return (1);
 }

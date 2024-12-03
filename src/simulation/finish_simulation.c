@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.c                                            :+:      :+:    :+:   */
+/*   finish_simulation.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/15 00:07:55 by mfontser          #+#    #+#             */
-/*   Updated: 2024/12/03 01:02:21 by mfontser         ###   ########.fr       */
+/*   Created: 2024/12/02 17:33:54 by mfontser          #+#    #+#             */
+/*   Updated: 2024/12/02 23:37:23 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	main(int argc, char **argv)
-{
-	t_general	data;
+//deberia cerrar bien los threats los mutex los leaks i salir limpio
 
-	if (argc > 6 || argc < 5)
+void finish_simulation (t_general *data)
+{
+	int i;
+
+	i = 0;
+	while (i < data->num_threads)
 	{
-		wrong_number_of_parameters();
-		return (1);
+		pthread_join(data->philos[i].thread_id, NULL);
+		i++;
 	}
-	if (params_are_valids(&data, argv) == 0)
-		return (1);
-	if (initialitations(&data) == 0)
-		return (1);
-	run_simulation(&data);
-	finish_simulation(&data);
-	return (0);
+	free_all_data (data);
 }

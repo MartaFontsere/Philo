@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 22:41:57 by mfontser          #+#    #+#             */
-/*   Updated: 2024/11/29 23:08:48 by mfontser         ###   ########.fr       */
+/*   Updated: 2024/12/03 00:21:04 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,14 @@ void	supervise_simulation(t_general *data)
 	num_of_philos_eaten_enough = 0;
 	while (!data->stop_simulation)
 	{
+		//usleep (1000); // SI?????
 		if (i == data->philo_num) //Reseteo para que vaya dando vueltas entre los filos creados y no se dupliquen resultados
 		{
 			i = 0;
 			num_of_philos_eaten_enough = 0;
 		}
 		
-		if (data->num_eats_each_philo)
+		if (data->num_eats_each_philo != -1)
 		{
 			pthread_mutex_lock(data->philos[i].n_meals);
 			if (data->philos[i].num_meals >= data->num_eats_each_philo)
@@ -78,7 +79,10 @@ void	supervise_simulation(t_general *data)
 
 
 			if (all_meals_eaten(data, num_of_philos_eaten_enough))
+			{
+				//printf("hola\n");
 				break ;
+			}
 		}
 
 		pthread_mutex_lock(data->philos[i].l_meal);

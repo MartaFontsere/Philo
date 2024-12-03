@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2024/11/29 22:01:11 by mfontser         ###   ########.fr       */
+/*   Updated: 2024/12/03 02:32:49 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ typedef struct s_general
 	int 				time_to_eat;
 	int 				time_to_sleep;
 	int 				num_eats_each_philo;
+	int 				num_threads;
 
 }						t_general;
 
@@ -105,56 +106,53 @@ int	params_conversion_to_int(t_general *data, char **argv);
 int check_extreme_cases (t_general *data);
 
 //INITIALITATIONS
+int initialitations (t_general *data);
+int init_dead_status_array (t_general *data);
+int init_num_meals_array (t_general *data);
+int init_last_meal_array (t_general *data);
 int init_data_struct (t_general *data);
-int init_philos_struct(t_general *data);
+void init_philos_struct(t_general *data);
+void define_color (t_philo *philo);
 
 
 //BUILD PHILOS AND FORKS
 int build_philos_and_forks(t_general *data);
 int build_philos_array (t_general *data);
 int build_forks_array(t_general *data);
-int	sleep_nap (t_philo *philo);
-int	think(t_philo *philo);
 
 
-//TIME
+
+//GET TIME
 unsigned int	get_current_time(void);
 unsigned int	get_simulation_time(t_general *data);
 
 
 //SIMULATION
-int run_simulation (t_general *data);
+void run_simulation (t_general *data);
 int create_philos_threads(t_general *data);
 void *philo_routine(void *the_philo);
-
-
-//ACTIONS
-
-int	eat(t_philo *philo);
-int	take_forks(t_philo *philo);
-void	unlock_forks(t_philo *philo);
-
-//CONTROLLER
 int check_simulation_state (t_philo *philo);
 void	supervise_simulation(t_general *data);
 void	kill_philo(t_general *data, t_philo *philo);
 int	all_meals_eaten(t_general *data, int num_of_philos_eaten_enough);
-
-
-//SIMULATION UTILS
+int	eat(t_philo *philo);
+int	take_forks(t_philo *philo);
+void	unlock_forks(t_philo *philo);
+int	sleep_nap (t_philo *philo);
+int	think(t_philo *philo);
 int	print_state(t_philo *philo, char *state);
-
-//UTILS
-size_t	ft_strlen(const char *str);
-int	ft_strncmp(const char *s1, const char *s2, size_t n);
-int	ft_isspace(int c);
-int	ft_atoi(const char *str);
+void finish_simulation (t_general *data);
 
 
 //FREE
-void free_all_info(t_general *data);
-void free_arrays(t_general *data);
-void free_data_mutex (t_general *data);
+void free_2_last_mutex (t_general *data);
+void free_3_last_mutex (t_general *data);
+void free_since_last_meal_function (t_general *data);
+void free_since_num_meals_function (t_general *data);
+void free_since_dead_status_function (t_general *data);
+void free_since_build_philos_function (t_general *data);
+void free_all_data (t_general *data);
+
 
 
 // ERROR_MESSAGES
@@ -162,8 +160,13 @@ void wrong_number_of_parameters(void);
 void error_empty_string();
 void error_negative_sign();
 void error_positive_sign();
-void error_chars_found();
+void error_non_numbers_found();
 void error_space_after_sign();
 
+//LIBF UTILS
+size_t	ft_strlen(const char *str);
+int	ft_strncmp(const char *s1, const char *s2, size_t n);
+int	ft_isspace(int c);
+int	ft_atoi(const char *str);
 
 #endif

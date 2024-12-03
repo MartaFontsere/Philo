@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 22:38:28 by mfontser          #+#    #+#             */
-/*   Updated: 2024/11/29 23:48:17 by mfontser         ###   ########.fr       */
+/*   Updated: 2024/12/03 00:21:03 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	sleep_nap (t_philo *philo)
 
 	status = print_state(philo, SLEEPING_STATE);
 	if (status == RUNNING)
-		usleep(philo->data->time_to_sleep * 1000); //REVISAR
+		usleep(philo->data->time_to_sleep * 1000); 
 	return (status);
 }
 
@@ -80,7 +80,7 @@ int	eat(t_philo *philo)
 	}
 	philo->num_meals++;
 	pthread_mutex_unlock(philo->n_meals);
-	usleep(philo->data->time_to_eat * 1000); // REVISAR
+	usleep(philo->data->time_to_eat * 1000);
 	unlock_forks(philo);
 	return (1);
 }

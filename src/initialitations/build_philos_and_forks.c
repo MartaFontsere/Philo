@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 21:35:23 by mfontser          #+#    #+#             */
-/*   Updated: 2024/11/29 22:01:05 by mfontser         ###   ########.fr       */
+/*   Updated: 2024/12/02 22:05:21 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,7 @@ int build_forks_array(t_general *data)
 	if (!data->forks_array)
 	{
 		write(2, "ABORT: Malloc Failed\n", 21);
-		//REVISAR
-		free_data_mutex (data);
-		free (data->philos); //liberar array de filos y demas cosaas que tuviere, puedo hacerlo aqui o fuera de la funcion
+		free_since_build_philos_function (data);
 		return (0); //pues saldria limpio
 	}
 	i = 0;
@@ -33,9 +31,10 @@ int build_forks_array(t_general *data)
 		{
 			//REVISAR
 			write(2, "ABORT: Error while creatin a Mutex\n", 35);
-			//liberar mutex de philo status array, desde donde ha fallado hacia atras;
-			//faltan liberar cosas;
-			free_arrays (data);
+			free_since_build_philos_function (data);
+			while (--i >= 0)
+				pthread_mutex_destroy(&data->forks_array[i]);
+			free (data->forks_array);
 			return (0);
 		}
 		i++;
@@ -53,7 +52,7 @@ int build_philos_array (t_general *data)
 	{
 		//REVISAR
 		write(2, "ABORT: Malloc Failed\n", 21);
-		free_data_mutex (data);
+		free_since_dead_status_function (data);
 		return (0);
 	}
 	data->philos = philos;

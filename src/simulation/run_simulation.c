@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   simulation.c                                       :+:      :+:    :+:   */
+/*   run_simulation.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 00:07:55 by mfontser          #+#    #+#             */
-/*   Updated: 2024/11/30 00:07:46 by mfontser         ###   ########.fr       */
+/*   Updated: 2024/12/03 00:04:36 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,19 +45,19 @@ int create_philos_threads(t_general *data)
 		if (pthread_create(&(data->philos[i].thread_id), NULL, &philo_routine, &data->philos[i]) != 0) //esta creando un threat
 		{
 			write(2, "ABORT: ERROR WHILE CREATING A THREAD\n", 37);
+			data->stop_simulation = 1;
 			return (0);
 		}
+		data->num_threads ++;
 		i++;
 	}
 	data->t_start = get_current_time();
-	pthread_mutex_unlock(&data->start_lock);		//una vez creados todos los filosofos, iniciamos el contador de la simulacion y desbloqueamos el candado para que los filosofos puedan empezar.
+	pthread_mutex_unlock(&data->start_lock); //una vez creados todos los filosofos, iniciamos el contador de la simulacion y desbloqueamos el candado para que los filosofos puedan empezar.
     return (1);
 }
 
-int run_simulation (t_general *data)
+void run_simulation (t_general *data)
 {
-	if (create_philos_threads(data) == 0)
-		return (0);
+	create_philos_threads(data);
 	supervise_simulation(data);
-	return (1);
 }
