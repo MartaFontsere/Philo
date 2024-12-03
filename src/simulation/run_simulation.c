@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 00:07:55 by mfontser          #+#    #+#             */
-/*   Updated: 2024/12/03 00:04:36 by mfontser         ###   ########.fr       */
+/*   Updated: 2024/12/03 11:54:30 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int create_philos_threads(t_general *data)
 		{
 			write(2, "ABORT: ERROR WHILE CREATING A THREAD\n", 37);
 			data->stop_simulation = 1;
-			return (0);
 		}
 		data->num_threads ++;
 		i++;

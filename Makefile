@@ -6,7 +6,7 @@
 #    By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 12:21:16 by mfontser          #+#    #+#              #
-#    Updated: 2024/12/03 01:28:10 by mfontser         ###   ########.fr        #
+#    Updated: 2024/12/03 11:56:14 by mfontser         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,11 +23,17 @@ PINK = \e[1;38;5;213m
 
 #------------------------------------------------VARIABLES---------------------------------------------------#
 
-FILES =  philo.c parsing.c error_messages.c
+FILES =  philo.c
 
-FILES += initialitations/initialitations.c initialitations/init_data_struct.c initialitations/build_philos_and_forks.c initialitations/init_philos_struct.c
+FILES += parsing/parsing.c parsing/check_valid_format_and_size.c parsing/check_extrem_and_int_conversion.c
 
-FILES += simulation/run_simulation.c simulation/controller.c simulation/get_time.c simulation/actions.c simulation/print_state.c simulation/finish_simulation.c
+FILES += initialitations/initialitations.c initialitations/init_data_struct.c initialitations/build_philos_and_forks.c \
+		 initialitations/init_philos_struct.c
+
+FILES += simulation/run_simulation.c simulation/controller.c simulation/get_time.c simulation/actions.c \
+		 simulation/print_state.c simulation/finish_simulation.c
+
+FILES += error/error_messages.c
 
 FILES += free/free.c
 
@@ -47,9 +53,6 @@ HEADER = inc/philo.h
 CC = cc 
 RM = rm -rf 
 CFLAGS = -Wall -Wextra -Werror -g -fsanitize=thread 
-
-#-fsanitize=address
-
 
 #--------------------------------------------------NORMAS----------------------------------------------------#
 

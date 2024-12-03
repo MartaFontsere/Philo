@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 00:27:47 by mfontser          #+#    #+#             */
-/*   Updated: 2024/12/03 02:33:26 by mfontser         ###   ########.fr       */
+/*   Updated: 2024/12/03 11:30:41 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 void	error_non_numbers_found(void)
 {
 	write(2, RED, ft_strlen(RED));
-	write(2, "Error: ", 7);
-	write(2, "Only numbers accepted\n", 22);
+	write(2, "Error: Only positive numbers accepted", 37);
+	write(2, " (without spaces)\n", 19);
 	write(2, END, ft_strlen(END));
 }
 

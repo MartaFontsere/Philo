@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 12:40:28 by mfontser          #+#    #+#             */
-/*   Updated: 2024/12/03 02:32:49 by mfontser         ###   ########.fr       */
+/*   Updated: 2024/12/03 11:29:25 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ typedef struct s_general
 int	params_are_valids(t_general *data, char **argv);
 int	check_valid_format(char **argv);
 int	check_size_int(char **argv);
+int	check_signs(char **argv, int i, int *j);
 int	params_conversion_to_int(t_general *data, char **argv);
 int check_extreme_cases (t_general *data);
 
@@ -120,12 +121,7 @@ int build_philos_and_forks(t_general *data);
 int build_philos_array (t_general *data);
 int build_forks_array(t_general *data);
 
-
-
 //GET TIME
-unsigned int	get_current_time(void);
-unsigned int	get_simulation_time(t_general *data);
-
 
 //SIMULATION
 void run_simulation (t_general *data);
@@ -135,14 +131,23 @@ int check_simulation_state (t_philo *philo);
 void	supervise_simulation(t_general *data);
 void	kill_philo(t_general *data, t_philo *philo);
 int	all_meals_eaten(t_general *data, int num_of_philos_eaten_enough);
-int	eat(t_philo *philo);
+unsigned int	get_current_time(void);
+unsigned int	get_simulation_time(t_general *data);
 int	take_forks(t_philo *philo);
+int	eat(t_philo *philo);
 void	unlock_forks(t_philo *philo);
 int	sleep_nap (t_philo *philo);
 int	think(t_philo *philo);
 int	print_state(t_philo *philo, char *state);
 void finish_simulation (t_general *data);
 
+// ERROR_MESSAGES
+void wrong_number_of_parameters(void);
+void error_empty_string();
+void error_negative_sign();
+void error_positive_sign();
+void error_non_numbers_found();
+void error_space_after_sign();
 
 //FREE
 void free_2_last_mutex (t_general *data);
@@ -152,16 +157,6 @@ void free_since_num_meals_function (t_general *data);
 void free_since_dead_status_function (t_general *data);
 void free_since_build_philos_function (t_general *data);
 void free_all_data (t_general *data);
-
-
-
-// ERROR_MESSAGES
-void wrong_number_of_parameters(void);
-void error_empty_string();
-void error_negative_sign();
-void error_positive_sign();
-void error_non_numbers_found();
-void error_space_after_sign();
 
 //LIBF UTILS
 size_t	ft_strlen(const char *str);

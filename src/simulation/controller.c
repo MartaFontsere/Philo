@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 22:41:57 by mfontser          #+#    #+#             */
-/*   Updated: 2024/12/03 00:21:04 by mfontser         ###   ########.fr       */
+/*   Updated: 2024/12/03 11:34:23 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,7 @@ void	supervise_simulation(t_general *data)
 
 
 			if (all_meals_eaten(data, num_of_philos_eaten_enough))
-			{
-				//printf("hola\n");
 				break ;
-			}
 		}
 
 		pthread_mutex_lock(data->philos[i].l_meal);

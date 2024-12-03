@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 22:38:28 by mfontser          #+#    #+#             */
-/*   Updated: 2024/12/03 00:21:03 by mfontser         ###   ########.fr       */
+/*   Updated: 2024/12/03 11:54:19 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,28 @@ int	take_forks(t_philo *philo)
 {
 	int	status;
 
-	pthread_mutex_lock(philo->right_fork);
-	status = print_state(philo, TAKEN_FORK_STATE);
-	if (status == STOPPED || philo->right_fork == philo->left_fork)
-		return (pthread_mutex_unlock(philo->right_fork), 0);
-	//CHECKEAR OTRA VEZ???
-	if (check_simulation_state(philo) == STOPPED)
-		return (pthread_mutex_unlock(philo->right_fork), 0);
-	//?????
-	pthread_mutex_lock(philo->left_fork);
-	status = print_state(philo, TAKEN_FORK_STATE);
-	if (status == STOPPED)
-		return (unlock_forks(philo), 0);
+	if (philo->id % 2 == 0)
+	{
+		pthread_mutex_lock(philo->left_fork);
+		status = print_state(philo, TAKEN_FORK_STATE);
+		if (status == STOPPED || philo->right_fork == philo->left_fork)
+			return (pthread_mutex_unlock(philo->left_fork), 0);
+		pthread_mutex_lock(philo->right_fork);
+		status = print_state(philo, TAKEN_FORK_STATE);
+		if (status == STOPPED)
+			return (unlock_forks(philo), 0);
+	}
+	else
+	{
+		pthread_mutex_lock(philo->right_fork);
+		status = print_state(philo, TAKEN_FORK_STATE);
+		if (status == STOPPED || philo->right_fork == philo->left_fork)
+			return (pthread_mutex_unlock(philo->right_fork), 0);
+		pthread_mutex_lock(philo->left_fork);
+		status = print_state(philo, TAKEN_FORK_STATE);
+		if (status == STOPPED)
+			return (unlock_forks(philo), 0);
+	}
 	return (status);
 }
 
@@ -63,21 +73,21 @@ int	eat(t_philo *philo)
 	if (print_state(philo, EATING_STATE) == STOPPED)
 		return (unlock_forks(philo), 0);
 	pthread_mutex_lock(philo->l_meal);
-	if (check_simulation_state(philo) == STOPPED)
-	{
-		pthread_mutex_unlock(philo->l_meal);
-		unlock_forks(philo);
-		return (0);
-	}
+	// if (check_simulation_state(philo) == STOPPED)
+	// {
+	// 	pthread_mutex_unlock(philo->l_meal);
+	// 	unlock_forks(philo);
+	// 	return (0);
+	// }
 	philo->last_meal = get_simulation_time(philo->data); //NO HAY MUCHO DELAY CON LA IMPRESION Y EL MOMENTO DE GUARDAR LA VARIABLE??
 	pthread_mutex_unlock(philo->l_meal);
 	pthread_mutex_lock(philo->n_meals);
-	if (check_simulation_state(philo) == STOPPED)
-	{
-		pthread_mutex_unlock(philo->n_meals);
-		unlock_forks(philo);
-		return (0);
-	}
+	// if (check_simulation_state(philo) == STOPPED)
+	// {
+	// 	pthread_mutex_unlock(philo->n_meals);
+	// 	unlock_forks(philo);
+	// 	return (0);
+	// }
 	philo->num_meals++;
 	pthread_mutex_unlock(philo->n_meals);
 	usleep(philo->data->time_to_eat * 1000);
