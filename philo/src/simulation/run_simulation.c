@@ -6,7 +6,7 @@
 /*   By: mfontser <mfontser@student.42.barcel>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 00:07:55 by mfontser          #+#    #+#             */
-/*   Updated: 2024/12/03 18:26:40 by mfontser         ###   ########.fr       */
+/*   Updated: 2024/12/12 11:11:17 by mfontser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	*philo_routine(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->data->start_lock);
 	pthread_mutex_unlock(&philo->data->start_lock);
-	if (philo->id % 2 == 0)
+	if (philo->id % 2 != 0)
 		suspend(philo, philo->data->time_to_eat / 2);
 	while (42)
 	{
